@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<!-- 1. <input type="text"> 태그 --> 
+<!-- 사용자의 입력을 받는 부분이므로 매우 중요함! 암기 필수! 왕중요! -->
+<p>
+    <!-- 디폴트로 type="text" 적용 -->
+    <input> 
+    <br>
+    <br>
+    <!-- 입력 상자 크기는 5-->
+    <!-- size : 텍스트 상자 자체의 크기 -->
+    <input type="text" size="5">
+    <br>
+    <br>
+    <!-- maxlength 속성 : 입력 가능한 최대 글자수는 4글자 -->
+    <!-- maxlength : 입력 가능한 최대 글자수 -->
+    <input type="text" maxlength="4">
+    <br>
+    <br>
+    <!-- placeholder 속성 -->
+    <!-- 검색창에 커서를 놓지 않았을 때 자동으로 떠 있는 문구 만들어주는 속성이다. 내가 입력하려고 하면 사라지는 문구이다. -->
+    <input type="text" placeholder="검색어를 입력하세요.">
+    <br> 
+    <br> 
+    <!-- required 속성 : 필수 입력 -->
+    <!-- 사용자가 필수로 입력해야하는 값을 뜻한다.-->
+    <input type="text" required> <!-- required="required" 이렇게 적어도 가능하다. -->
+    <br>
+    <br>
+    <!-- value 속성 : 입력한 값이 저장되는 속성 -->
+    <!--  placeholder 속성은 사용자가 입력하려고 하면 문구가 사라지지만 value 속성은 문구가 아예 써져있다. -->
+    <input type="text" value="날씨">
+    <br>
+    <br>
+    <!-- readonly 속성 : 입력된 값을 수정할 수 없게 만듬 -->
+    <input type="text" value="영희야 사랑해" readonly> <!-- readonly="readonly" 이렇게 적어도 가능하다. -->
+    <br>
+    <br>
+    <!-- disabled 속성 : 입력 상자를 사용할 수 없도록 만듬--> 
+    <!-- 클릭도 문구 입력도 막아 놓는다.-->
+    <!-- ex) 핸드폰 인증할 때 인증번호 받기 전에는 인증번호를 입력 할 수 없도록 입력칸 막아놓기 -->
+    <input type="text" disabled> <!-- disabled="disabled" 이렇게 적어도 가능하다. -->
+</p>
+
+<!-- 2. 기타 <input> 태그 -->
+<p>
+    <!-- type="password" : 비밀번호 입력용 -->
+    <input type="password" placeholder="비밀번호">
+    <br>
+    <br>
+    <!-- type="number" : 숫자 입력용 -->
+    <input type="number" min="1" max="12"> 
+    <!-- spin버튼(숫자를 올렸다 내렸다 할 수 있는 버튼)이 생긴다. -->
+    <!-- 1부터 12까지만 입력할 수 있다.-->
+    <br>
+    <br>
+    <!-- type="email" : 이메일 입력용 -->
+    <!-- 만약 @를 넣지않고 적었다면 서버측으로 데이터를 보낼 때 오류가 난다. 하지만 능력은 떨어진다. javascript에서 한다. -->
+    <input type="email" placeholder="이메일">
+    <br>    
+</p>
+
+
+<!-- 3. <textarea> 태그 -->
+<!-- 좀 큰 상자 텍스트 상자 만들어준다. -->
+<p>
+    <!-- 디폴트 : 2행 20열 -->
+    <textarea></textarea>
+    <br>
+    <!-- rows 속성 : 행, cols 속성 ; 열 -->
+    <textarea rows="3" cols="30"></textarea>
+    <br>
+    <!-- value 속성 대신 태그 내부 텍스트가 입력된 값을 저장한다. -->
+    <textarea>안녕하세요</textarea> <!-- value 속성을 쓰지 않고 <textarea>태그 내부에 문구를 작성하면 써진다. -->
+    <!-- 위 태그에서 안녕하세요 문구를 꺼내려면 value값으로 꺼내는게 아님!-->
+</p>
+
+<!-- 4. 단일 선택 : <input type="radio"> --> 
+<!-- 동그란 선택창 만들어주는 속성,, 이것도 중요함.... -->
+<!-- radio속성은 name, value 속성과 항상 함께 해야한다. (선택창 만들고 변수명 지어주고 값 넣어주기) -->
+<p>
+    <!-- name 속성 : 같은 name을 가지는 radio가 하나처럼 동작한다.-->
+    <!-- 왕 중요하다,, 변수이름 지어주는 속성임 -->
+    <input type="radio" name="gender">남 <!-- 여기서 gender는 변수명같은거임. 내 마음대로 짓는거 -->
+    <input type="radio" name="gender">여 <!-- 이렇게 name 속성으로 같은 값을 주면 버튼 중 하나만 선택할 수 있게 작동한다. -->
+    <br>
+    <!-- value 속성 : 어떤 radio를 선택했는지 알기 위해서 반드시 추가해야 한다. -->
+    <!-- 서버에서 어떤 선택을 했는지 알 수 있게 name으로 지은 변수명에 값을 넣어주는 속성이다. -->
+    <!-- db에 저장하고자 하는 값으로 value로 주면 된다. -->
+    <input type="text" name="gender" value="male">남
+    <input type="text" name="gender" value="female">여
+    <!-- java로 넘어갔을 때 : String gender = "male"; 이 코드가 되는것.-->
+</p>
+
+<!-- 5. 다중 선택 : <input type="checkbox"> -->
+<!-- 체크박스 선택창 만들어주는 속성 -->
+    <p>
+    <!-- 혼자 있어도 단독으로 작동한다. 선택할 때마다 표시됐다 안됐다 함. -->
+    <input type ="checkbox"> 모두 동의합니다.
+    <br>
+    <br>
+    <!-- name 속성 : 같은 이름을 가진 checkbox들은 하나의 배열처럼 동작한다. -->
+    <!-- javd에서 String[] 배열로 받는다. -->
+    <input type="checkbox" name="hobbies">운동
+    <input type="checkbox" name="hobiies">여행
+    <br>
+    <br>
+    <!-- value 속성 : 어떤 checkbox를 선택했는지 알기 위해서 반드시 추가해야 한다. -->
+    <input type="checkbox" name="hobbies" value="1">운동 <!-- 2진법으로 value값 주기 이유는 어려우니,, 찾아보기..,,-->
+    <input type="checkbox" name="hobbies" value="2">여행
+    <input type="checkbox" name="hobbies" value="4">독서
+    <input type="checkbox" name="hobbies" value="8">영화
+    </p>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
