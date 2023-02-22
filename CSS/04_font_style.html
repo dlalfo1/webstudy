@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        p {
+            font-family: '맑은 고딕', sans-serif; /* '맑은 고딕'이 없으면 고딕계열(sans-serif)을 사용하시오. */
+            font-family: '궁서', serif;           /* '궁서'가 없으면 명조 계열(serif)을 사용하시오. */
+            font-size: 32px;                      /* 디폴트 16px */
+            font-weight: 900;                     /* 디폴트 400, 100~900사이 값, 600이상 볼드하다 */
+            font-style: italic;                   /* italic : 기울임, none : 기울임 없애기 */
+
+            /* 블록 요소는 정렬이 된다. */
+            text-align: center;                   /* 텍스트 정렬 : left(왼쪽정렬), right(오른쪽정렬), center(가운데정렬), justify(양쪽정렬) */
+            text-decoration: underline;           /* underline : 밑줄, line-through : 취소선, none : 선 없애기(링크걸 때 필수) */
+            text-shadow: 5px 5px 1px yellow;    /* 그림자 : x크기(가로), y크기(세로) blur(또렷하냐,흐릿하냐) 색상 */
+        }
+        pre{
+            line-height: 32px;                     /* 행 높이 : 세로 가운데 정렬에서 주로 활용(중요! 많이 씀) */
+            letter-spacing: -1px;                  /* 글자 간격(자간) */
+            color: rgb(0, 0, 0);
+            color: rgb(255, 255, 255);
+            color: #000000;     
+            color: #FFFFFF;
+            color: rgba(0, 0, 0, 0.5)            /* alpha(투명도) : 0(투명) ~ 1(불투명)   */
+     
+        }
+        h1 {
+            /*
+                벤더 프리픽스
+                1. Vender Prefix
+                2. CSS 속성 앞에 브라우저의 벤더(제공업체)를 작성하는 것을 의미한다.
+                3. 종류
+                    1) -webkit- : 크롬, 사파리
+                    2) -moz-    : 파이어폭스 
+                    3) -o-      : 오페라
+
+            */
+            -webkit-text-stroke-color: crimson;
+            -webkit-text-stroke-width: 1px;
+        }
+        a {
+            /* 인라인 요소들은 정렬이 안 된다.*/
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <p>Hello World</p>
+    <pre>Nice to meet you</pre>
+    <pre>You good?</pre>
+
+    <h1>I'm fine</h1>
+    <a>Contact Us</a>   <!-- <a>링크는 인라인 요소로 본인이 속한 행의 길이를 알지 못한다. 그러므로 정렬도 못 한다.-->
+        
+</html>
