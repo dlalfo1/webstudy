@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .wrap1 > img:nth-of-type(2){
+            /* 자리도 차지 하지 않고 안 보인다. */
+            display: none;
+        }
+    </style>
+    <div class="wrap1">
+        <img src="../../images/flower4.jpg" width="300px">
+        <img src="../../images/flower5.jpg" width="300px">
+        <img src="../../images/flower3.jpg" width="300px">
+    </div>
+
+    </style>
+    <style>
+        .wrap2 > input[type=checkbox] { /* type이 checkbox인 <input> 태그 */
+            display: none;
+        }
+        .wrap2 > label {
+            padding-left: 20px;
+            background-image: url('../../images/check1.png');
+            background-size: 16px 16px;
+            background-repeat: no-repeat;
+            background-position: 0 3px;
+        }
+        .wrap2 > input[type=checkbox]:checked + label  { /* 인접한 형제라는 뜻의 + label 해줘도 되는이유가 각checkbox밑에 label이 하나뿐이기 때문이다.*/
+            background-image: url('../../images/check2.png');
+        }
+        
+    </style>
+    <div class="wrap2">
+        <input type="checkbox" id="all">
+        <label for="all">모두 동의합니다.</label> <!-- 체크박스가 눈에 안 보여도 라벨링해서 글자를 클릭하면 체크박스에 체크가 될 거임. -->
+        <input type="checkbox" id="service">
+        <label for="service">서비스 이용에 동의합니다.</label>
+    </div>
+
+    <style>
+        /* 블록 -> 인라인*/
+        .wrap3 > div {
+            width: 100px;
+            height: 100px;
+            border: 1px solid gray;
+            display: inline; /* 인라인 요소로 바꾸기*/
+        }
+    </style> 
+    <div class="wrap3">
+        <div class="box1">BOX1</div>
+        <div class="box2">BOX2</div>
+    </div>
+
+    <style>
+        /* 인라인 -> 블록 */
+        .wrap4 > a {
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px; /* height값과 line-height값이 같으면 세로 가운데 정렬이 된다. */ 
+            border: 1px solid gray;
+            display: block; /* 블록 요소로 바꾸기 */
+                            /* a링크를 블록 요소로 바꾸면 너비, 높이를 가지기 때문에 클릭 범위가 넓어진다. (네이버 로그인창 같은거) */
+        }
+
+    </style>
+     <div class="wrap4">
+            <a href='javascript.void(0)'>링크1</a>
+            <a href='javascript.void(0)'>링크2</a>
+         
+        </div>
+
+    <style>
+            /* 인라인 -> 블록, 블록 요소들을 같은 줄에 배치 */
+            .wrap5 > a {
+                width: 100px;
+                height: 100px;
+                text-align: center;
+                line-height: 100px; /* height값과 line-height값이 같으면 세로 가운데 정렬이 된다. */ 
+                border: 1px solid gray;
+                display: inline-block; /* 인라인 블록 요소로 바꾸기 */
+            }
+    
+    </style>
+     <div class="wrap5">
+            <a href='javascript.void(0)'>링크1</a>
+            <a href='javascript.void(0)'>링크2</a>
+             
+     </div>
+
+</body>
+
+
+</html>
