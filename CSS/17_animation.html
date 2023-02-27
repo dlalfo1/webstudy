@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <style>
+        /* div 공통 작업*/
+        div {
+            width: 100px;
+            height: 100px;
+            border: 1px solid gray;
+            text-align: center;
+            line-height: 100px;
+            box-sizing: border-box;
+        }
+    </style>
+    <style>
+        /*
+            @-webkit-keyframes : 크롬, 사파리
+            @-moz-keyframes    : 파이어폭스
+            @-o-keyframes      : 오페라
+            @-ms-keyframes     : 익스플로러
+        */
+        @-webkit-keyframes sun {
+            /* from : 애니메이션 시작 지점(0%) */
+            from {
+                background-color: orange;
+                border-radius: 50px;
+                opacity: 0;  /* 투명한 상태(안 보임) */
+            }
+            /* to : 애니메이션 종료 지점(100%) */
+            to {
+                background-color: orange;
+                border-radius: 50px;
+                opacity: 1;  /* 불투명한 상태(보임) */
+            }
+        }
+        .box1 {
+            animation: sun;          /* 실행할 애니메이션 이름 : keyframes 참고 */
+            animation-duration: 3s;  /* 애니메이션 실행 시간(초) */
+            animation-timing-function: ease;      /* 애니메이션 동작시간배분 */
+            animation-iteration-count: infinite;  /* 애니메이션 동작횟수*/
+            animation-delay: 1s;                  /* 애니메이션 1초 후 동작 */
+            animation-direction: alternate;       /* 애니메이션 방향 변경 
+                                                     원래는 from에서 to로 방향이 바뀌는데
+                                                     to에서 form으로 다시 가게 바꿔준다. */
+        }
+    </style>
+    <div class="box1">
+        ^ㅁ^
+    </div>
+
+    <style>
+        @keyframes fancy {
+            0% { background-color: teal;}
+            12.5% { background-color: orange;}
+            25% { background-color: crimson;}
+            37.5% { background-color: blue;}
+            50% { background-color: greenyellow;}
+            62.5% { background-color: palevioletred}
+            75% { background-color: gold}
+            87.5% { background-color: limegreen}
+            100% { background-color: royalblue}
+        }
+        .neon {
+            /* animation 단축 속성 */
+            animation: fancy 1s ease infinite;
+        }
+    </style>
+    <div class="neon">
+        ^ㅁ^
+    </div>
+
+    <style>
+        @keyframes moonwalk {
+            0% { margin-left: 0;}            
+            100% { margin-left: 300px;}
+        }
+        .box3 {
+            animation: moonwalk 1s ease-in-out infinite alternate;
+        }
+    </style>
+    <div class="box3">
+        ㅇ0ㅇ
+    </div>
+</body>
+</html>
