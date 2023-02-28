@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        /* 한번 다시 만들어보기 11111*/
+        /* fontawesome 사용을 위한 CDN */
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css');
+        
+        /* div 초기화 */
+        div {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        /* 작업 */
+        body {
+            background-color: beige;
+        }
+        .wrap {
+            width: 450px;
+        }
+        .login_wrap {
+            width: 450px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .left_wrap {
+            width: 350px;
+        }
+        .right_wrap {
+            width: 90px;
+        }
+        .id_wrap, .pw_wrap {
+            display: flex;
+            border: 1px solid gray;
+            border-radius: 5px 0 5px 0;  /* 두 군데만 둥글게 다듬기 */
+            background-color: white;
+        }
+        .pw_wrap {
+            margin-top: 10px;
+        }
+        .icon_wrap {
+            width: 40px;
+            height: 40px;
+            text-align: center;  /* 아이콘의 가로 가운데 정렬 */
+            line-height: 40px;   /* 아이콘의 세로 가운데 정렬 */
+            background-color: gray;
+            border-radius: 3px 0 0 0;
+        }
+        .input_wrap {
+            padding: 7px 15px;   /* <input>을 가로/세로 가운데 배치하려고 적절한 상하/좌우 여백을 찾아보니 7px 15px정도 되더라. */
+        }
+        .input_wrap > input {
+            width: 270px;
+            padding: 3px;
+            border: 0;     /* 평소에 보이는 테두리를 없앤다. */
+            outline: 0;    /* 포커스를 가질 때 테두리를 없앤다. */
+            background-color: white;
+        }
+        .right_wrap > button {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 5px;
+            background-color: gray;
+        }
+        .right_wrap > button:hover {
+            cursor: pointer;
+            background-color: teal;
+            color: white;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <div class="wrap">
+        <form method="post" action="/">
+            <div class="login_wrap">
+                <div class="left_wrap">
+                    <div class="id_wrap">
+                        <div class="icon_wrap">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="input_wrap">
+                            <input type="text" placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="pw_wrap">
+                        <div class="icon_wrap">
+                            <i class="fa-solid fa-key"></i>
+                        </div>
+                        <div class="input_wrap">
+                            <input type="password" placeholder="●●●●">
+                        </div>
+                    </div>
+                </div>
+                <div class="right_wrap">
+                    <button>로그인</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
