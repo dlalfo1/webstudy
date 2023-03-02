@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="box1"></div>
+    <script>
+        // 내부 텍스트 : textContent
+        var box1 = document.getElementById('box1');
+        box1.textContent = 'Hello World'; 
+    </script>
+
+    <div id="box2"><p>링크</p></div>
+    <script>
+        // textContent는 태그를 제외한 내부 텍스트만을 의미한다. 
+        var box2 = document.getElementById('box2');
+        console.log(box2.textContent);
+    </script>
+
+    <div id="box3"></div>
+    <script>
+        // 내부 HTML 요소 : innerHTML
+        var box3 = document.getElementById('box3');
+        box3.textContent = '<p>문단</p>';
+    </script>
+
+    <ul id="season"></ul>
+    <script>
+        // 내부 요소 추가를 위해서 + 연산 사용할 수 있다.
+        var season = document.getElementById('season');
+        season.innerHTML += '<li>봄</li>'; 
+        season.innerHTML += '<li>여름</li>';                       
+        season.innerHTML += '<li>가을</li>';
+        season.innerHTML += '<li>겨울</li>';
+    </script>
+
+    <div id="box4">Hello World</div>
+
+    <script>
+        /*
+            CSS 적용하기
+            1. style 속성을 이용한다.
+            2. inline 방식으로 CSS가 적용된다. (JavaScript를 이용한 CSS는 우선순위가 가장 높다.)
+            3. CSS 속성 적용 방식 
+                1) 마침표 : CSS 속성에서 하이픈(-)을 제거한 뒤  camel case 방식의 이름으로 바꿔서 사용한다.
+                2) 대괄호 : CSS 속성을 문자열 형식으로 그대로 사용한다.
+            4. 작성 예시
+                1) 마침표 : dom.style.fontSize = '12px';
+                2) 대괄호 : dom.style['font-size'] = '12px';
+                ex)
+                    font-size : 12px;
+                    -----------------
+                    style.fontSize = '12px'; 
+                    style['font-size'] = '12px';
+                    => 적용할 값은 언제나 문자열로 표기한다. (작은따옴표 ' ')
+        */
+        var box4 = document.getElementById('box4');
+        box4.style.color = '#efefef';    
+        box4.style['color'] = '#030303'; // CSS의 덮어쓰기 속성이 <script> 안에서도 적용된다.
+    </script>
+
+    <div id="box5" class="box5">Hello World</div>
+    <script>
+        /* 
+            attribute
+            1. 태그에 명시된 속성이다.
+            2. get/set 메소드를 이용해서 attribute를 사용한다.
+            3. 메소드 
+                1) 속성 알아내기 : getAttribute('속성명')
+                2) 속성 변경하기 : setAttribute('속성명', '값') => 어떤속성을 어떤값으로 바꾸겠다.
+        */
+        var box5 = document.getElementById('box5');
+        console.log(box5.getAttribute('id'));
+        console.log(box5.getAttribute('class'));
+        box5.setAttribute('id', 'box5-1');
+        box5.setAttribute('class', 'box5-1');
+        
+    </script>
+
+    <div id="box6" class="box6">Hello World</div>
+    <script>
+        /*
+            property
+            1. 객체가 가지는 속성이다. (java에서 필드값과 같은 개념이다.)
+            2. 마침표(.)를 이용해서 property를 사용한다.
+            3. property 확인하는 방법
+                개발자 도구 - Elements 탭 - Properties 탭
+        */
+
+        var box6 = document.getElementById('box6');
+        console.log('box6.id');
+        console.log('box6.className');
+        box6.id = 'box6-1';
+        box6.className = 'box6-1';
+    </script>
+
+    <div>
+    <input id="inp" type="text" value="Hello World" readonly="readonly">
+    </div>
+
+    <script>
+        // readolny 속성 없애기
+        var inp = document.getElementById('inp');
+       // inp.removeAttribute('readonly'); => attribute 이용 : readonly 애트리뷰트 삭제하기.
+
+        inp.readOnly = false;           // => property 사용
+       // inp.setAttribute('readonly', 'false');
+       // => 이게 안 되는 이유는 readonly 타입을 끄는 방법이 readonly="false"가 아니기 때문이다.
+    </script>
+
+    <style>
+        .red_text {
+            color: red;
+        }
+        .blue_text {
+            color:blue;
+        }
+    </style>
+    <div id="box7" class="red_text">Hello World</div>
+    <script>
+        // 파란색으로 바꾸기
+        var box7 = document.getElementById('box7');
+        // box7.style.color = 'blue'; => 스타일로 바꾸기
+        // box7.setAttribute('class', 'blue_text'); => 클래스로 바꾸기 (클래스 걸어놓고 바꾸는 방법. 많이 쓰임. )
+        box7.className ='blue_text'; // => 프로퍼티로 바꾸기
+
+    </script>
+</body>
+</html>
