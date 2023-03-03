@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="box1"></div>
+    <script>
+        
+        // while
+        /*
+        var n = 1;
+        while(n <= 5) {
+            document.getElementById('box1').innerHTML += (n + '&nbsp;&nbsp;'); // 대입연산자(=)을 쓰면 5만 출력된다. n이 계속 덮어씌워지기 때문이다.
+            n++;
+        }
+        */
+
+        // for
+        // var 대신 let사용 => 지역변수 n이다. 즉, for문 안에서만 사용하는 n이다~
+        for(let n =1; n <= 5; n++) { 
+            document.getElementById('box1').innerHTML += (n + '&nbsp;&nbsp');
+        }
+    </script>
+
+    <div id="box2">
+
+    </div>
+    <script>
+        /*
+            <select name ="month">
+                <option value ="">월</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        */
+       
+       var str = '<select name ="month"> <option value ="">월</option>';
+        
+       for(let m = 1; m <= 12; m++) {
+            str += '<option value="' + m + '">' + m + '월</option>';
+        }   
+        str += '</select>';
+        document.getElementById('box2').innerHTML = str;
+        
+    </script>
+
+   
+    <div id="box3"></div>
+    
+    <script>
+        /*
+            <img src = '../../images/animal1.jpg' width="100">
+            <img src = '../../images/animal2.jpg' width="100">
+            <img src = '../../images/animal3.jpg' width="100">
+            <img src = '../../images/animal4.jpg' width="100">
+            <img src = '../../images/animal5.jpg' width="100">
+            <img src = '../../images/animal6.jpg' width="100">
+            <img src = '../../images/animal7.jpg' width="100">
+            <img src = '../../images/animal8.jpg' width="100">
+            <img src = '../../images/animal9.jpg' width="100">
+            <img src = '../../images/animal10.jpg' width="100">
+        */  
+
+        var str = '';
+        for(let n =1; n <= 10; n++) {
+            str += '<img src="../../images/animal' + n + '.jpg" width="100px">'; 
+                                        // id는 안 된다. for문안에 있으므로 중복생성되므로(id는 유일한 값이여야한다.)
+        }
+        document.getElementById('box3').innerHTML = str;
+
+    </script>
+
+    <div id="box4">
+    </div>
+    <script>
+   
+        /*
+    
+                co1=1   co1=2     col=3
+        row=1     1       2         3
+        row=2     4       5         6
+        row=3     7       8         9
+        ---------------------------------
+        (1~9) = (row -1) * 3 + col
+
+       */  
+       
+    var str = '<table border="1"><tbody>';
+    for(let row = 1; row <=3; row++){
+        str += '<tr>';
+            for(let col = 1; col <=3; col++){
+                str += '<td>' + ((row -1) * 3 + col) + '</td>';
+            }
+            str += '</tr>';
+    }
+    str += '</tbody></table>';
+    document.getElementById('box4').innerHTML = str;
+    </script>
+</body>
+</html>
