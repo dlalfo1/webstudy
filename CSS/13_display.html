@@ -14,7 +14,7 @@
         }
     </style>
     <div class="wrap1">
-        <img src="../../images/flower4.jpg" width="300px">
+        <img src="../../images/flower1.jpg" width="300px">
         <img src="../../images/flower5.jpg" width="300px">
         <img src="../../images/flower3.jpg" width="300px">
     </div>
@@ -31,7 +31,8 @@
             background-repeat: no-repeat;
             background-position: 0 3px;
         }
-        .wrap2 > input[type=checkbox]:checked + label  { /* 인접한 형제라는 뜻의 + label 해줘도 되는이유가 각checkbox밑에 label이 하나뿐이기 때문이다.*/
+        .wrap2 > input[type=checkbox]:checked + label  {
+       /* 인접한 형제라는 뜻의 + label 해줘도 되는이유가 각checkbox밑에 label이 하나뿐이기 때문이다.*/
             background-image: url('../../images/check2.png');
         }
         
@@ -43,20 +44,25 @@
         <label for="service">서비스 이용에 동의합니다.</label>
     </div>
 
+    <br>
+    <br>
+    
+
     <style>
         /* 블록 -> 인라인*/
         .wrap3 > div {
             width: 100px;
             height: 100px;
             border: 1px solid gray;
-            display: inline; /* 인라인 요소로 바꾸기*/
+            display: inline; /* 인라인 요소로 바꾸기 */
         }
     </style> 
     <div class="wrap3">
         <div class="box1">BOX1</div>
         <div class="box2">BOX2</div>
     </div>
-
+    <br>
+    <br>
     <style>
         /* 인라인 -> 블록 / 인라인 대표 : a, spa, label */
         .wrap4 > a {
@@ -74,8 +80,10 @@
             <a href='javascript.void(0)'>링크1</a>
             <a href='javascript.void(0)'>링크2</a>
          
-        </div>
+     </div>
 
+    <br>
+    <br>
     <style>
             /* 인라인 -> 블록, 블록 요소들을 같은 줄에 배치 */
             .wrap5 > a {
