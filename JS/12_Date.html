@@ -52,7 +52,7 @@
         // Date 객체의 prototype에 getDayName() 함수를 등록시킨다.
         Date.prototype.getDayName = function() {
             var weekNames = ['일', '월', '화', '수', '목', '금', '토'];
-             return weekNames[this.getDay()];
+             return weekNames[this.getDay()]; // 여기서 this는 Date객체를 가리킨다. 즉 Date.getDay()와 같다.
         }
 
         console.log(now.getDayName());
