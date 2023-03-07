@@ -165,18 +165,18 @@
         // 개별 동의를 클릭하면 -> 모든 개별 동의의 체크 유무를 확인해서 
         // 모두 체크되었으면 전체 동의를 체크하고, 아니면 전체 동의를 해제한다. 
     
-        for(let i = 0; i < chkOneList.length; i++){
-            chkOneList[i].onclick = function(){
-               if(chkOneList[i].checked == false){
-                    chkAll.checked = false; 
-               } else {
-                    chkAll.checked = true; 
-               }
-            
-                
+        for(let i = 0; i < chkOneList.length; i++){ // 하나라도 해지되었을경우에 사용 i
+            chkOneList[i].onclick = function(){ // 개별체크박스 중 하나라도 클릭했을 때
+                if(chkOneList[i].checked == false){ // 만약 하나라도 체크되어있지 않다면
+                    chkAll.checked = false; // 전체동의 체크도 해제되고 
+                    // 여기서 맹점은.. if문을 안거치고 바로 else로 오기 때문에 하나라도 클릭했을시 전체동의에 체크가된다.
+                }
+                chkAll.checked = true; // 그게 아니라면 전체동의에 체크해라
+            // 전체클릭했을시 전체동의하는법 모르겟어요...,,,
+            }
                
             }
-        }
+        
         
 
     </script>
@@ -204,7 +204,6 @@
             }
         }
     </script>
-
 
 </body> 
 

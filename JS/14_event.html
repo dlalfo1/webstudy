@@ -15,6 +15,12 @@
                 1) 발생한 이벤트의 상세 정보를 저장한 객체이다.
                 2) 이벤트가 발생하면 자동으로 생성된다.
                 3) 이벤트가 발생하면 이벤트 리스너에 인수로 전달된다.
+                
+                DOM과 관련된 이벤트가 발생하면 관련 정보는 모두 event객체에 저장된다.
+                이벤트 발생 요소, 이벤트 타입, 이벤트 관련 데이터도 저장된다.
+
+                ex) 마우스 이벤트 -> 마우스의 위치정보 포함 등
+                키보드 이벤트 -> 누른 키의 키코드 등
 
             2. 이벤트 타입
                 1) 이벤트의 종류를 의미한다.
@@ -179,13 +185,15 @@
 
         // 고전 이벤트 등록 (이벤트 리스너는 익명 함수를 사용)
         link.onclick = function(event){   // 이벤트 객체 : event는 link 클릭시 자동으로 생성돼서 리스너의 인수로 들어간다.
-           // alert('이벤트 타입 : ' + event.type);
-           // alert('이벤트 대상 : ' + event.target);
-           // alert(event.target.textContent);
-           // alert('이벤트 대상 : ' + this); // this = event.target
-           // alert(this.textContent);
-           event.preventDefault(); // 기본 동작을 방지하겠다. (아주 많이 씀.)
+            // 클릭했을시의 관련된 이벤트 정보가 전부 event객체에 저장된다.
+            // alert('이벤트 타입 : ' + event.type);
+            //alert('이벤트 대상 : ' + event.target);
+            // alert(event.target.textContent);
+            // alert('이벤트 대상 : ' + this); // this = event.target
+            // alert(this.textContent);
+            event.preventDefault(); // 기본 동작을 방지하겠다. (아주 많이 씀.)
         }
+        console.slog(event.target);
     </script>
 </body>
 </html>

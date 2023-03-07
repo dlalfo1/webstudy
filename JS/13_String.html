@@ -31,6 +31,11 @@
         console.log(str.indexOf('a'));     // 첫 번째 a의 인덱스 반환
         console.log(str.lastIndexOf('a')); // 마지막 a의 인덱스 반환1
 
+        // indexOf함수는 str이 동일한 문자열의 반복일시 그 문자열이 등장하는 처음 인덱스인 0을 반환한다.
+        // 예를 들어  var str = 'JavaJavaJavaJavaJava'; 라면
+        //  str.indexOf('Java')는 0을 반환한다.
+        // abcdef처럼 서로 다른 문자가 반복되는 문자열일 경우에는 각각의 인덱스를 반환한다.
+        
         // 5. 특정(시작/종료) 패턴 검사
         console.log(str.startsWith('J'));    // J로 시작하면 true 반환
         console.log(str.endsWith('Script')); // Script로 끝나면 true 반환
@@ -69,15 +74,16 @@
 
     
     String.prototype.replaceAll = function(before, after) {
-       // this     : 'JavaJavaJavaJavaJava'
+        // this     : 'JavaJavaJavaJavaJava'
         // before   : 'Java'
         // after    : '자바'
-        var str = this;
-        while(str.indexOf(before) != -1){
+        var str = this; // this : replaceAll() 함수를 호출한 객체를 뜻한다.
+        while(str.indexOf(before) != -1){ // str안에 Java가 있다면
             str = str.replace(before, after); // str에 영문Java를 한글 자바로 바꾼 문자열을 계속 덮어쓰기 해줘야한다.
         }
         return str; // 현재 객체가 가지고 있는것을 반환한다....
     }
+    console.log(str.indexOf('Java'));
     
     var str = 'JavaJavaJavaJavaJava';  // console.log(str.replaceAll()); // JavaJavaJavaJavaJava를 반환한다.
     console.log(str.replaceAll('Java', '자바'));
