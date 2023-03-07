@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- 1. <button>을 이용한 submit -->
+    <div>
+        <form id="frm_daum" action="https://search.daum.net/search" method="get"> <!-- action : 데이터를 보낼(submit 할) 서버의 경로 -->
+            <input id="q" type="text" name="q"> <!-- id와 name의 값을 맞췄다. 
+                                                    id는 <script>에서 사용하려는 목적이고 name은 서버에서 사용하려는 목적이다. -->                   
+            <button type="submit">다음검색</button>
+     <!-- <button type="submit">텍스트</button> : 서브밋, type="submit" 생략 가능(디폴트 타입)-->
+        </form>
+    </div>
+
+    <script>
+        
+        // submit을 수행하는건 <form>이다.
+        // 이벤트 대상 : <form></form>
+
+        // submit 이벤트 등록
+        // 1. 고전 이벤트 : 문서객체.onsubmit = function(){}
+        // 2. 표준 이벤트 : 문서객체.addEventListener('submit', function(){});
+
+        // 이벤트 대상
+        var frmDaum = document.getElementById('frm_daum');
+
+        // 검색어 입력란 : <input id="q">
+        var q = document.getElementById("q");
+        
+        // 이벤트 등록 (고전 이벤트)
+        frmDaum.onsubmit = function(event){
+          // value속성이 검색창에 입력한 텍스트 값이다. 기억 필수!!!
+           if(q.value == ''){
+            alert('검색어가 입력되지 않았습니다.');
+            q.focus();              // 검색어 입력란에 자동으로 커서를 보냄
+            event.preventDefault(); // submit 방지
+            return;                 // 이벤트 종료(이벤트 리스너의 종료)
+           }
+        }
+        
+
+
+    </script>
+
+    <!-- 2. <input type="submit">을 이용한 submit -->
+    <div>
+        <form id="frm_google" action="https://www.google.co.kr/search" method="get">
+            <input id="gq" type="text" name="q"> 
+            <!-- id의 값은 <form> 태그 전체를 통털어서 1개만 존재할 수 있다.-->
+            <!-- 그러니 위에쓴 q는 사용할 수 없다. -->
+            <input type="submit" value="구글검색"> 
+            <!-- <input type="submit" value="텍스트">  : 서브밋 -->
+        </form>
+    </div>
+
+    <script>
+
+        // 이벤트 대상
+        var frmGoogle = document.getElementById('frm_google');
+        
+        // 검색어 입력란
+        var gq = document.getElementById('gq');
+
+        // 이벤트 등록 (표준이벤트)
+        frmGoogle.addEventListener('submit', function(event){
+            if(gq.value == ''){
+                event.preventDefault();
+                gq.focus();
+                return;
+             }
+        })
+
+        /* 
+            // 고전 이벤트
+            frmGoogle.onsubmit = function(event) {
+                if(gq.value == ''){
+                alert('검색어가 입력되지 않았습니다.');
+                gq.focus();
+                event.preventDefault();
+                return;
+                }
+            }
+        */
+    </script>
+
+    <!-- 3. <input type="button"> -->
+    <div>
+        <form id="frm_naver" action="https://search.naver.com/search.naver" method="get">
+            <input id="query" type="text" name="query">
+            <input type="button" value="네이버검색" id="btn_naver">
+            <!-- 여기서 button은 아무기능도 안 하는 걍 버튼모양임. 이걸 <script>에서 처리해주는 것. -->
+        </form>
+    </div>
+    <script>
+
+        // 검색어 입력란
+        var query = document.getElementById('query');
+
+        // 검색 폼
+        var frmNaver = document.getElementById('frm_naver');
+
+        // 검색 버튼
+        var btnNaver = document.getElementById('btn_naver');
+
+        // click 이벤트 등록
+        btnNaver.onclick = function(event){
+            if(query.value == ''){
+                event.preventDefault(); // <input type="button"> 버튼을 클릭하면 어떤 일이 있는지? 원래 아무 일이 없다.
+                                        // 원래 하는 일이 없기 때문에 event.preventDefault()는 의미없는 코드가 된다.
+                return;                 // 하지만, retrun은 이벤트 리스너를 종료시키는 역할을 수행하므로 
+                                        // retrun 이후에 나타난 submit 실행 코드의 실행을 막을 수 있디/
+              }
+                frmNaver.submit();      // 그럼 sbmit이 실행되지 않을테니 아무일도 일어나지 않게 된다~!.
+        }
+    </script>
+
+    <!-- 4. 체크 박스 선택하기 -->
+    <style>
+        label {
+            display: block;
+        }
+    </style>
+    <div>
+        <label for="chk_all">
+            <input type="checkbox" id="chk_all">
+            모두 동의합니다. <!-- id로 인식시킬것 -->
+        </label>
+        <label for="chk_service">
+            <input type="checkbox" id="chk_service" class="chk_one">
+            이용약관에 동의합니다. <!-- class로 인식시킬것-->
+        </label>
+        <label for="chk_privacy">
+            <input type="checkbox" id="chk_privacy" class="chk_one">
+            개인정보 동의합니다.
+        </label>
+        <label for="chk_promotion">
+            <input type="checkbox" id="chk_promotion" class="chk_one">
+            프로모션 동의합니다.
+        </label>
+    </div>
+
+    <script>
+
+        // 전체 동의 체크박스
+        var chkAll = document.getElementById('chk_all');
+
+        // 개별 동의 체크박스들
+        var chkOneList = document.getElementsByClassName('chk_one');
+
+        // 전체 동의를 체크하면 -> 개별 동의가 모두 체크되고,
+        // 전체 동의를 해제하면 -> 개별 동의가 모두 해제된다.
+        chkAll.onclick = function() { // 모두 동의하는 체크박스를 클릭했을시~ 펑션을 수행해라.
+            for(let i = 0; i < chkOneList.length; i++){
+                chkOneList[i].checked = chkAll.checked; 
+                // 모두 동의하는 체크박스의 체크 상태에 따라 개별 동의 체크박스의 체크상태가 결정된다.
+            }
+        }
+
+        // 개별 동의를 클릭하면 -> 모든 개별 동의의 체크 유무를 확인해서 
+        // 모두 체크되었으면 전체 동의를 체크하고, 아니면 전체 동의를 해제한다. 
+    
+        for(let i = 0; i < chkOneList.length; i++){
+            chkOneList[i].onclick = function(){
+               if(chkOneList[i].checked == false){
+                    chkAll.checked = false; 
+               } else {
+                    chkAll.checked = true; 
+               }
+            
+                
+               
+            }
+        }
+        
+
+    </script>
+    <!-- 연습 -->
+    <div>
+        <form id="frm_ex">
+            <input id="email" type="text" placeholder="이메일">
+            <button>가입</button>
+        </form>
+    </div>
+    <script>
+        // 문제.
+        // 입력된 이메일의 형식을 다음의 기준으로 검사하여 이메일이 아니면 submit을 방지하시오.
+        // 1. @가 포함되어 있어야 한다.
+        // 2. @가 첫 번째 글자이거나 마지막 글자일 수 없다.
+        // 3. 마침표(.)가 포함되어 있어야 한다.
+        var frmEx = document.getElementById('frm_ex');
+        var email = document.getElementById('email');
+        frmEx.onsubmit = function(event){
+            var str = email.value;
+            if(str.indexOf('@') == -1 || str.startsWith('@') || str.endsWith('@') || str.indexOf('.') == -1){
+                alert('이메일 형식이 올바르지 않습니다.');
+                event.preventDefault();
+                return;
+            }
+        }
+    </script>
+
+
+</body> 
+
+</html>
