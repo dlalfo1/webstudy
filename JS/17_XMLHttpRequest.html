@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        /*
+            비동기 처리 방식
+            1. 데이터를 주고 받는 통신(송신, 수신) 과정이 순서 없이 처리되는 방식이다.
+            2. 응답이 없어도 계속 요청할 수 있는 방식이다.
+            3. 페이지를 구성하는 일부 데이터만 요청하고 응답 받을 수 있다.
+            4. 이 때 JavaScript의 XMLHttpRequest (내장)객체가 사용된다.
+            => 나중에 JQUERY 가면 문법이 많이 바뀐다. 자바스크립트에선 개념을 확실히 익혀두자.
+        */
+    </script>
+
+    <div>
+        <input type="button" id="btn_req_text" value="텍스트요청">
+        <div id="res_text"></div>
+    </div>
+    <script>
+
+
+        document.getElementById('btn_req_text').addEventListener('click', () => {
+
+                // 1. XMLHttpRequest 객체 생성
+                var xhr = new XMLHttpRequest();
+        
+                /*
+                    2. open - 요청 정보 생성
+                    1) open(HTTP Method, URL, Sync/Async)
+                    2) HTTP Method
+                        (1) GET
+                        (2) POST
+                    3) URL : 요청하는 서버 경로
+                    4) Sync/Async
+                            (1) Sync(동기)    : false
+                            (2) Async(비동기) : true
+                */
+                xhr.open('get', 'data.txt', true)
+        
+                /* 3. send - 요청하기 */
+                xhr.send();
+        
+                /*
+                    4. 응답 처리하기 (비동기 방식은 각각의 응답이 언제 올지 모른다.)
+                        1) 응답이 되었는지 확인하기 위한 readystatechange 이벤트가 사용된다.
+                        2) 응답 속성
+                            (1) readyState - 통신 상태 확인
+                                ① 0 : OPENED
+                                ② 1 : UNSEND
+                                ③ 2 : HEADERS_RECEIVE
+                                ④ 3 : LOADING
+                                ⑤ 4 : DONE (이것만 사용하면 된다.
+                            (2) status - 응답 코드
+                                ① 200 : 응답 성공
+                                ② 4xx  : 요청 실패 (사용자의 잘못)
+                                ③ 5xx  : 응답 실패 (서버측 잘못)
+                            (3) 응답 데이터의 형식
+                                ① 텍스트 : responseText
+                                ② XML   : responseXML
+                                ③ JSON  : JSON.parse(responseText) 
+                                    => 응답 데이터가 JSON의 경우에도 Text로 보는데 JSON 내장객체를 이용해서 JSON 데이터로 파싱해준다.
+                */
+        
+                // 4. readystatechange 이벤트 등록
+                xhr.addEventListener('readystatechange', () => {
+                    if(xhr.readyState == 4 && xhr.status == 200){
+                        document.getElementById('res_text').textContent = xhr.responseText;
+                    }
+                });
+        });
+
+
+    </script>
+
+    <div>
+        <input type="button" id="btn_req_xml1" value="제품정보요청1">
+        <div id="res_xml1"></div>
+    </div>
+    <script>
+
+        document.getElementById('btn_req_xml1').addEventListener('click', () => { // 버튼을 클릭하면~
+            var xhr = new XMLHttpRequest(); // xhr : 비동기 통신으로 데이터를 받아올 수 있는 객체
+
+            xhr.open('get', 'product1.xml', true); // get방식으로 product1.xml 파일 달라고 요청보낸다~ 비동기방식(ajax)으로!
+            xhr.send(); // 데이터 보냄~
+            xhr.addEventListener('readystatechange', () => {
+                if(xhr.readyState == 4 && xhr.status == 200){ // 통신이 끝났고(4.DONE) 응답이 성공했다면(200)~
+                    // XML 응답 처리 속성은 responseXML이다.
+                    // XML형식으로 데이터를 받아서 data변수에 저장해준다.
+                    var data = xhr.responseXML; 
+                    // <product> 태그를 가져온다. (총3개)
+                    var productList = data.getElementsByTagName('product');
+                    // 가져온 제품 정보들을 화면에 나타낼 <table> 태그로 만든다.
+                    var str = '<table border="1">';
+                    str += '<thead><tr><td>모델</td><td>제조사</td><td>가격</td><tr></thead>';
+                    str += '<tbody>';
+                    for(let i = 0; i < productList.length; i++){
+                        str += '<tr>';
+                        str += '<td>' + productList[i].getElementsByTagName('model')[0].textContent + '</td>'; 
+                        // getElementsByTagName <model>태그가 1개여도 무조건 배열을 반환하기 때문에 인덱스 0만 가져오기
+                        // 거기에 텍스트 값인 세탁기만 빼온다.
+                        str += '<td>' + productList[i].getElementsByTagName('maker')[0].textContent + '</td>'; 
+                        // 위와 똑같이 <maker> 태그의 텍스트값인 삼성 빼오기
+                        str += '<td>' + productList[i].getElementsByTagName('price')[0].textContent + '</td>'; 
+                        // <price> 태그의 텍스트값인 100 빼오기
+                        str += '</tr>';
+                    }
+                    str += '<tbody></table>';
+                }
+                document.getElementById('res_xml1').innerHTML = str;
+                
+            });
+
+        });
+    </script>
+
+    <div>
+        <input type="button" id="btn_req_xml2" value="제품정보요청2">
+        <div id="res_xml2"></div>
+    </div>
+
+    <script>
+        document.getElementById('btn_req_xml2').addEventListener('click', () => {
+            var xhr = new XMLHttpRequest(); // xhr : 비동기 통신으로 데이터를 받아올 수 있는 객체
+            xhr.open('get', 'product2.xml', true);
+            xhr.send();
+            xhr.addEventListener('readystatechange', () => {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    var data = xhr.responseXML;
+                    var productList = data.getElementsByTagName('product');
+                    var str = '<div>';
+                    for(let i = 0; i < productList.length; i++){
+                      str += '<ul>';
+                      str += '<li>' + productList[i].getAttribute('model') + '</li>';
+                      str += '<li>' + productList[i].getAttribute('maker') + '</li>';
+                      str += '<li>' + productList[i].getAttribute('price') + '</li>';
+                      str += '</ul>';
+                    }
+                      str += '</div>';
+                    document.getElementById('res_xml2').innerHTML = str;
+                }
+            });
+            
+        });
+    </script>
+
+    <div>
+        <input type="button" id="btn_req_json" value="제품정보요청3">
+        <div id="res_json" class="product_list"></div>
+    </div>
+
+    <style>
+        .product_list {
+            display: flex; /* 자식들을 좌우로 배치하기 위해 부모에게 display: flex를 부여한다. */
+        }
+        
+        .product {
+            border: 1px solid black; /* <script>로 만든 태그에도 CSS 적용이 가능하다. */
+
+        }
+    </style>
+    <script>
+        document.getElementById('btn_req_json').addEventListener('click', () => {
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', 'product.json', true);
+            xhr.send();
+            xhr.addEventListener('readystatechange', () => {
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    var data = JSON.parse(xhr.responseText); 
+                    // JSON형식으로 되어있지만 text로 되어있는 데이터를 JSON 객체로 파싱한게 object에 담긴다.
+                    // 그래야 원하는것을 가져오기 위해 객체도 사용하고 for문도 돌릴 수 있다.
+                    var str = '';
+                    for(let i = 0; i < data.length; i++){
+                        str += '<div class="product">'; // 만약 여기서 CSS속성을 쓸거면 class 속성을 주면 된다.
+                        str += '<span>' + data[i].model + '</span>';
+                        str += '<span>' + data[i].maker + '</span>';
+                        str += '<span>' + data[i].price + '</span>';
+                        str += '</div>';
+                    }
+                    document.getElementById('res_json').innerHTML = str;
+
+                    }
+            });
+        });
+    </script>
+
+    <!-- 연습. sfc_web_map.xml 읽어서 화면에 표시하기 -->
+    <div>
+        <input type="button" id="btn_get_weather" value="날씨가져오기">
+        <table borer="1">
+            <thead>
+                <tr>
+                    <td>지역명</td>
+                    <td>날씨</td>
+                    <td>온도</td>
+                </tr>
+            </thead>
+            <tbody id="weather_body">
+              <!-- 이렇게 만들어주기~
+                <tr>
+                    <td>d</td>
+                    <td>d</td>
+                    <td>d</td>
+                </tr>
+            -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById('btn_get_weather').addEventListener('click', () => {
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', 'sfc_web_map.xml', true);
+            xhr.send();
+            xhr.addEventListener('readystatechange', () => {
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    var data = xhr.responseXML; 
+                    var weatherList = data.getElementsByTagName('local');
+                    for(let i = 0)
+                    
+                    console.log(weatherList);
+                }
+
+            });
+
+        });
+    </script>
+
+</body>
+</html>
