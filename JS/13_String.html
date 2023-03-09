@@ -73,19 +73,6 @@
     // replaceAll 속성의 값으로 함수를 등록하면 replaceAll 속성은 메소드가 된다.
 
     
-    String.prototype.replaceAll = function(before, after) {
-        // this     : 'JavaJavaJavaJavaJava'
-        // before   : 'Java'
-        // after    : '자바'
-        var str = this; // this : replaceAll() 함수를 호출한 객체를 뜻한다.
-        while(str.indexOf(before) != -1){ // str안에 Java가 있다면
-            str = str.replace(before, after); // str에 영문Java를 한글 자바로 바꾼 문자열을 계속 덮어쓰기 해줘야한다.
-        }
-        return str; // 현재 객체가 가지고 있는것을 반환한다....
-    }
-    console.log(str.indexOf('Java'));
-    
-    var str = 'JavaJavaJavaJavaJava';  // console.log(str.replaceAll()); // JavaJavaJavaJavaJava를 반환한다.
     console.log(str.replaceAll('Java', '자바'));
    
     // 팁. split과 join으로 replaceAll 처리하기

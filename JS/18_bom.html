@@ -15,16 +15,14 @@
             2. 브라우저의 구성 요소를 객체로 처리할 수 있는 방식이다.
                 (브라우저의 구성 요소가 이미 객체로 만들어져 있다.)
             3. 주요 BOM  객체
-            1) window   : 브라우저 창을 의미한다. 모든 BOM 객체의 최상의 객체이다. 생략할 수 있다.
+            1) window   : 브라우저 창을 의미한다. 모든 BOM 객체의 최상위 객체이다. 생략할 수 있다.
             2) screen   : 화면을 의미한다. 화면의 너비/ 높이 등을 처리한다.
             3) history  : 방문 경로를 저장한 객체이다. 뒤로/ 앞으로 등을 처리한다.
-            4) location : 경로를 처리하는 객체이다. URL 변경 등을 처리한다.  (쉽게 말해서 주소창이다. a태그와 하는일이 똑같다.)       
+            4) location : 경로를 처리하는 객체이다. URL 변경 등을 처리한다. (쉽게 말해서 주소창이다. a태그와 하는일이 똑같다.)       
         */
-
     </script>
 
     <script>
-
         // screen 객체
 
         console.log('화면 너비', screen.width);
@@ -65,6 +63,10 @@
             // 화면의 중앙 위치 계산해서 창 열기
             var width = 480;
             var height = 360;
+            /*
+                화면 너비 1536
+    ​            화면 높이 864
+            */
             var left = (screen.width - width) / 2;
             var top = (screen.height - height) / 2;
             var feature = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top;
