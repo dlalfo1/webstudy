@@ -194,7 +194,7 @@
     <!-- 연습. sfc_web_map.xml 읽어서 화면에 표시하기 -->
     <div>
         <input type="button" id="btn_get_weather" value="날씨가져오기">
-        <table borer="1">
+        <table border="1">
             <thead>
                 <tr>
                     <td>지역명</td>
@@ -222,10 +222,17 @@
             xhr.addEventListener('readystatechange', () => {
                 if(xhr.readyState == 4 && xhr.status == 200){
                     var data = xhr.responseXML; 
-                    var weatherList = data.getElementsByTagName('local');
-                    for(let i = 0)
+                    var locaList = data.getElementsByTagName('local');
+                    var str = '';
+                    for(let i = 0; i < locaList.length; i++){
+                       str += '<tr>';
+                        str += '<td>' + locaList[i].textContent + '</td>';
+                        str += '<td>' + locaList[i].getAttribute('desc') + '</td>';
+                        str += '<td>' + locaList[i].getAttribute('ta') + '</td>';
+                        str += '</tr>';
+                    } 
                     
-                    console.log(weatherList);
+                   document.getElementById('weather_body').innerHTML = str;
                 }
 
             });
@@ -233,5 +240,52 @@
         });
     </script>
 
+    <div>
+        <input type="button" id="btn_get_book" value="책 가져오기">
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>책 이름</td>
+                    <td>저자</td>
+                    <td>가격</td>
+                </tr>
+            </thead>
+            <tbody>
+
+            <tbody id="book_body">
+
+        </table>
+    </div>
+
+    <script>
+        document.getElementById('btn_get_book').addEventListener('click', () => {
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', 'book.json', true);
+            xhr.send();
+            xhr.addEventListener('readystatechange', () => {
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    var data = JSON.parse(xhr.responseText); // data에는 JSON 객체가 들어있다. ({ })
+                var bookList = data.books; // bookList에는 JSON 배열이 들어있다. ([ ])
+                var str = '';
+                    for(let i = 0; i < bookList.length; i++){
+                        str += '<tr>'
+                        str += '<td>' + bookList[i].title + '</td>';
+                        str += '<td>' + bookList[i].author + '</td>';
+                        str += '<td>' + bookList[i].price + '</td>';
+                        str += '<tr>'
+                     /*  
+                        객체의 프로퍼티 순회하는 방법(10장 참고) : for-in문   
+                        for(let p in b761
+                            str += '<td>' + bookList[i][p] + '</td>';
+                        }
+                    */    
+                    }
+                    document.getElementById('book_body').innerHTML = str;
+                }
+
+            });
+
+        });
+    </script>
 </body>
 </html>

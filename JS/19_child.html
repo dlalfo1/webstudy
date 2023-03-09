@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div>받은메세지</div>
+        <div id="receive_msg"></div>
+    </div>
+
+    <div>
+        <label for="msg">보낼 메시지</label>
+        <input type="text" id="msg">
+        <input type="button" id="btn_send" value="메시지전송">
+    </div>
+    <script>
+
+            // 문서객체 
+            var msg = document.getElementById('msg');
+            var btnSend = document.getElementById('btn_send');
+
+            // click 이벤트
+            btnSend.addEventListener('click', ()=> { // btn_send 버튼을 클릭하면
+
+                // opener : 현재 창을 열어 준 부모창
+                    opener.document.getElementById('receive_msg').textContent = msg.value; // 부모창의 receive_msg <div>태그 안에 입력한 메시지를 넘겨라.
+
+            });
+    
+    </script>
+
+</body> 
+</html>

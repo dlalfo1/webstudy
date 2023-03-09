@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+            <script>
+            /* 
+                고전 이벤트 (load이벤트는 거의 고전이벤트로 처리한다.)
+                window.onload = ()=> {
+
+                }
+
+                onload = ()=> { // window객체는 생략이 가능하기 때문에 생략이 가능하다.
+
+                }
+                
+                // 표준 이벤트
+                widow.addEventListener('load', () => {
+
+                });
+            */
+             // load 이벤트 : 문서 내의 모든 구성요소를 인식할 수 있다.
+             // load 이벤트는 HTML문서를 모두 읽은 뒤 동작하기 때문에 <script> 태그가 어느곳에 위치하든 상관이 없다.(<html> 태그 아래 위치해도 상관 x)
+             // 사용하려면 window객체가 필요하다. window 키워드는 생략이 가능하다.
+            window.onload = ()=> {
+                // <input type="text" id="msg">에 입력한 메시지를 19_child.html 창으로 전송한다.
+
+                // 문서 객체
+                var btnSend = document.getElementById('btn_send');
+                var msg = document.getElementById('msg');
+                
+                // 창 객체(19_child.html) - 모든 함수에서 사용할 수 있도록 전역 변수로 선언
+                var child = null; // 아직은 없다..open을 안 했으니까
+                
+                // 창 여는 함수
+                function fnOpenChild(url, target){
+                    // 화면 중앙에 창 열기
+                    var width = 480;
+                    var height = 360;
+                    var left = (screen.width - width) / 2;
+                    var top = (screen.height - height) / 2;
+                    var feature = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top;
+                    // 창이 열려 있다면 열지 않기
+                    if(child == null || child.closed) { // child == null : 열린적이 없거나 , child.closed : 열렸는데 닫혔다면
+                        child = window.open(url, target, feature); // url, name은 함수의 매개변수로 받아온 값이고 feature은 함수내에서 만들어줌
+                    }
+                }
+                
+                // 창에 데이터 보내는 함수
+                function fnSendToChild(){
+                    // child의 모든 구성 요소를 인식할 수 있다.
+                    child.onload = ()=>{
+                        child.document.getElementById('receive_msg').textContent = msg.value; // 자식창의 어딘가로 메세지창에 입력된 값을 보내주겠다.
+                    }
+                }
+                // click 이벤트
+                btnSend.addEventListener('click', ()=>{
+                        fnOpenChild('19_child.html', '');
+                        fnSendToChild();
+                    });
+                }
+
+            </script>
+
+            <div>
+                <laber for="msg">보낼 메세지</laber>
+                <input type="text" id="msg">
+                <input type="button" id="btn_send" value="메시지전송">
+            </div>
+
+            <div>
+                <div>받은 메시지</div>
+                <div id="receive_msg"></div>
+            </div>
+
+</body>
+</html>
