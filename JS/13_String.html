@@ -71,9 +71,21 @@
 
     // String 객체가 공유할 수 있도록 prototype에 replaceAll 속성을 등록한다.
     // replaceAll 속성의 값으로 함수를 등록하면 replaceAll 속성은 메소드가 된다.
-
     
-    console.log(str.replaceAll('Java', '자바'));
+    String.prototype.replaceAll = function(before, after) {
+        // this   : 'JavaJavaJavaJavaJava'
+        // before : 'Java'
+        // after  : '자바'
+        var str = this;
+        while(str.indexOf(before) != -1){
+            str = str.replace(before, after);
+        }
+        return str;
+    }
+    
+    var str = 'JavaJavaJavaJavaJava';
+   console.log(str.replaceAll('Java', '자바'));
+    
    
     // 팁. split과 join으로 replaceAll 처리하기
     /*

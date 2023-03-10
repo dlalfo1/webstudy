@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../resources/js/lib/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <div id="box1">BOX1</div>
+    <script>
+
+        // 1. text() == textContent
+        console.log($('#box1').text()); // text 꺼내오는거
+        $('#box1').text('박스1'); // text 수정해주는거 => text() 오버로드 되어있다.
+    </script>
+
+    <div id="box2">
+        <p>BOX2</p>
+    </div>
+    <script>
+
+        // 2.html() == innerHTML
+        console.log($('#box2').html()); // html() => 태그를 가져와라
+        $('#box2').html('<h1>BOX2</h1>'); // 태그를 수정해라
+    </script>  
+
+    <div id="box3">BOX3</div>
+    <script>
+
+        // 3. css() == style
+        $('#box3').css('color', '#c8c8c8').css('font-size', '32px'); // 메소드체이닝을 이용해서 1개 이상의 css속성을 줄 수 있다.
+
+        $('#box3').css({ // 객체를 넣어서 그 안에 속성을 넣어준다.
+            'background-color': '#181818',
+            'text-align': 'center'
+        });
+    </script>
+
+    <div id="box4" class="box4">
+        <img id="img">
+    </div>
+    <script>
+
+        // 4. attribute == attr()
+        console.log($('#img').attr('id')); // getAttribute(인수1개)
+        $('#img').attr('alt', '이미지'); // setAttribute(인수2개) => 파일이 없을시 '이미지' 문자열로 표시해주기
+        $('#img').attr('src','../../images/fruit1.jpg'); // 속성이 없는경우 넣어줌
+        $('#img').attr('width', '200px');
+        // 보통은 setAttribute 기능으로 사용한다. 인수를 조작하는 방법으로
+    </script>
+
+    <div>
+        <a id="link">링크</a>
+    </div>
+    <script>
+
+        // 5. property == prop()
+        console.log($('#link').prop('id'));
+        $('#link').prop('href', 'http://www.naver.com');
+        $('#link').prop('target', '_blank');
+    </script>
+
+    <div>
+        <ul id="menu">
+            <li id="kimchi">김치</li>
+        </ul>
+    </div>
+    <script>
+
+        /*
+            1. 부모-자식 관계로 추가하기
+                1) 부모.prepend(자식)   : 첫 번째 자식으로 추가하기
+                2) 부모.append(자식)    : 마지막 자식으로 추가하기 (압도적으로 많이 씀~)
+                3) 자식.prependTo(부모) : 첫 번째 자식으로 추가하기
+                4) 자식.appendTo(부모)  : 마지막 자식으로 추가하기 (압도적으로 많이 씀~)
+                => 앞에다 추가하는 메소드를 많이 쓴다.
+        */
+        var menu = $('#menu');
+        menu.prepend('<li id="cheese">치즈</li>'); // 이거랑 + menu는 이미 제이쿼리 객체이다
+        menu.append('<li id="pizza">피자</li>');
+        menu.prepend($('<li>').attr('id', 'beef').text('소고기')); // 이거랑 같음. 문법만 다른것.
+                                                                   // '<li>' 일반객체를 $() 이용해서 제이쿼리 객체로 만들어주고 메소드체이닝으로 속성넣어준것
+        menu.append($('<li>').attr('id', 'pork').text('돼지고기'));                                           
+        
+        $('<li id="americano">아메리카노</li>').prependTo(menu); // 자식은 문자열객체 상태니까 제이쿼리객체로 바꿔줘야함
+        $('<li id="latte">라떼</li>').appendTo(menu); 
+        $('<li>').attr('id', 'chicken').text('치킨').prependTo(menu); // 이 문법은 변수처리할 때 유용한 문법임. 봐두기.
+        $('<li>').attr('id', 'hamburger').text('햄버거').appendTo(menu);
+        
+        /*
+            2. 형제 관계로 추가하기
+                1) 형제.before(형제)    : 이전형제 추가하기
+                2) 형제.after(형제)
+        */
+         $('#kimchi').before('<li id="ramen">라면</li>');
+         $('#kimchi').after($('<li>').attr('id', 'rice').text('공기밥'));
+    </script>
+
+    <div>
+        <ul id="movies">
+            <li id="terminater">터미네이터</li>
+            <li id="avatar">아바타</li>
+            <li id="alien">에일리언</li>
+        </ul>
+    </div>
+    <script>
+
+        // 1. 특정 요소만 제거하기
+        $('#terminater').remove();
+
+        // 2. 모든 하위 요소 제거하기
+        $('#movies').empty(); // #movies 자체는 삭제되지 않고 남는다.
+
+    </script>
+</body>
+</html>   
