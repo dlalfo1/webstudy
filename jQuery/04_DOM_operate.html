@@ -38,7 +38,7 @@
         });
     </script>
 
-    <div id="box4" class="box4">
+    <div>
         <img id="img">
     </div>
     <script>
@@ -114,5 +114,90 @@
         $('#movies').empty(); // #movies 자체는 삭제되지 않고 남는다.
 
     </script>
+
+    <div>
+        <form id="frm">
+            <div>
+                <input type="text" placeholder="아이디">
+            </div>    
+            <div>
+                <input type="password" placeholder="비밀번호">
+            </div>
+            <div>
+                <input type="radio" name="gender" value="male" id="male">
+                <label for="male">남자</label>
+                <input type="radio" name="gender" value="female" id="fmale">
+                <label for="female">여자</label>
+                <input type="radio" name="gender" value="none" id="none"checked>
+                <label for="none">선택안함</label>
+            </div>
+            <div>
+                <select>
+                    <option value="">선택하세요</option> <!-- 보통 <select> 태그를 만들 때는 <option>태그 처음에 빈 문자열을 준다. -->
+                    <option value="서울">서울</option>
+                    <option value="경기" selected>경기</option>
+                    <option value="인천">인천</option>
+                </select>
+            </div>
+            <div>
+                <textarea>Hello World</textarea>
+            </div>
+        </form>
+    </div>
+    <script>
+        // input type=text , 사용자가 입력한값은 value(프로퍼티)에 저장된다.
+        $('#frm :text').css('background-color', 'silver');
+        $('#frm :text').prop('value', 'admin');
+        $('#frm :text').val('master'); // 제이쿼리에서 입력 값을 조작하는 val 메소드
+
+        // input type=password
+        $('#frm :password').val('1234');
+
+        // input type=radio
+        console.log($('#frm :radio').val());          // 첫 번째 radio의 value
+        console.log($('#frm :radio:checked').val()); // 체크된 radio의 value
+
+        // select
+        console.log($('#frm select').val()); // 선택된 option의 value
+
+        // textarea
+        console.log($('#frm textarea').text()); // textarea는 입력된 값을 조작하거나 사용할 때 val()를 사용하지 않고 text()를 사용한다.
+        $('#frm textarea').text('Hello jQeury');
+    </script>   
+
+    <style>
+        .big-text {
+            font-size: 2em;
+        }
+        .red-text {
+            color: red;
+        }
+    </style>
+    <div id="box4" class="invisible">
+        Hello World
+    </div>
+
+    <script>
+
+        // 보통 class를 주는 이유는 CSS 적용을 하기 위해서다.
+
+        // class 속성 추가
+        $('#box4').addClass('big-text').addClass('red-text');  // 메소드 체이닝
+        $('#box4').addClass('big-text red-text');              // 공백으로 class 구분 (원래 두가지 클래스 줄 때 공백으로 띄어서 준다.)
+
+        // class 속성 제거
+        $('#box4').removeClass('big-text').removeClass('red-text');
+        $('#box4').removeClass('big-text red-text');
+
+        // class 속성 토글(추가와 제거가 번갈아가면서 적용)
+        $('#box4').toggleClass('big-text').toggleClass('big-text');
+        $('#box4').toggleClass('red-text').toggleClass('red-text');
+
+        // class 속성 확인
+        if($('#box4').hasClass('invisible')){
+            $('#box4').css('opacity', '0');  // 투명도를 0으로 설정하면 안 보인다.
+        }
+    </script>
+   
 </body>
 </html>   
