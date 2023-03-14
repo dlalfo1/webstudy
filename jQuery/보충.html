@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../resources/js/lib/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+    <div id="box1"> 
+
+    </div>
+    <script>
+
+
+
+        // 초기 이미지와 버튼 만들기
+        // <img> 태그를 <div> 태그 밑에 넣고 싶으면 html(), append()둘 다 가능하다.
+        // 이건 아무내용도 없을 때 둘다 가능한 것이고 원래는 내용을 아예 바꿀 땐 html(), 기존에 추가할 땐 append()를 사용한다.
+        // 태그를 계속 누적시키고 싶다면 append() 메소드를 사용해야한다.
+        // src 속성을 추가하고 싶으면 attr(), prop() 둘 다 가능하다.
+        $('#box1').html($('<img>').attr('id', 'light').attr('src', '../../images/light1.png').attr('width', '100px')); // width 너비는 css 메소드로도 추가 가능하다.
+        $('#box1').prepend($('<button>').data('state', '0').attr('id', 'btn1').text('OFF')); // prepend() 메소드는 맨 앞에 태그를 추가해주므로 이미지보다 앞에 버튼이 위치하게 된다.
+        // data- : data- 속성, state는 변수명, 그 값이 1
+        // click 이벤트
+        // 이벤트를 만들 때 on()메소드를 사용하지 않고 그냥 click()메소드를 사용해도 된다.
+        // 제이쿼리에선 모든 이벤트를 메소드로 만들어뒀기 때문이다.
+        $('#btn1').click(function(event){ // btn1 버튼을 클릭했을 때 메소드가 실행된다.
+           /* 
+                이벤트 대상(target) => 이벤트 대상인 btn1이 this가 된다.
+                1. event.target
+                2. this
+            */
+
+            // btn1의 data-state=0이면 OFF, data-state="1"이면 ON으로 처리된다.
+            if($(this).data('state') == 0){ // data속성의 변수명 'state'의 값이 0일 경우
+                                            // 넣은값은 문자열 '0'인데 숫자 0이랑 비교해도 true로 작동하는 이유는 == 이거기 때문이다.
+                                            // === 이건 타입이랑 값까지 비교하지만 == 이건 값만 비교한다.
+                                            // === 이걸 쓸거면 '0' 과 비교해야한다.
+                $('#light').attr('src', '../../images/light2.png'); // true라면 이미지를 light2로 변경한다.
+                $(this).text('ON').data('state', '1'); // 버튼의 text값도 'ON'으로 변경한다.
+            } else { // 0, 즉 꺼져있지 않을경우
+                $('#light').attr('src', '../../images/light1.png'); // 이미지를 light1로 변경하고
+                $(this).text('OFF').data('state', '0');             // 버튼 text값도 'OFF'로 변경한다.
+            } 
+            
+        });
+    </script>
+
+    <hr>
+
+    <box id="box2">
+        <div>
+            <button id="btn-prev" class="btn_move" data-value="-1">이전</button> 
+            <span id="image_no"></span> <!-- 버튼 옆에 만들어주기 위해 인라인요소인 <span> 태그 씀-->
+            <button id="btn_next" class="btn_move" data-value="1">다음</button> <!-- 버튼에 같은 class를 줘서 함께 작동시킬 수 있음.-->
+        </div>
+        <div id="image_box">
+
+            <!-- 여기에 이미지를 넣고 싶다면 <img> 태그 말고 background-image를 주는 경우가 더 많다.-->
+
+        </div>   
+        <style>
+            #image_box{
+                width: 480px;
+                height: 320px;
+                background-size: 100% 100%; /* <div> 박스랑 배경이미지 크기를 맞추려면 background-size 속성에 너비, 높이 100%를 주면된다.*/
+                background-repeat: no-repeat; /* 배경이미지 반복되지 않게 하기 */
+            }
+
+            .btn_move:hover { 
+                background-color: yellow;
+            }
+        </style> 
+
+        <script>
+
+            // 전역 배열 및 인덱스(모든 함수에서 사용할 수 있다.)
+            var imageList = ['animal1.jpg', 'architecture1.jpg', 'flower1.jpg', 'fruit1.jpg', 'nature1.jpg'];
+            var i = 0;
+
+            // 이미지와 번호를 표시하는 함수
+            function fnImageDisplay(){
+                $('#image_box').css('background-image', 'url(../../images/' + imageList[i] + ')');
+                $('#image_no').text((i + 1) + '/' + imageList.length);
+            }
+
+            // 이미지 변경 함수
+            function fnImageSlide(n){ // 다음 버튼을 누르면 i가 1증가 
+                i += n;
+                i %= imageList.length; // i값이 0~4일 땐 나머지값이 i값과 동일해 변하지 않지만 배열의 길이인 5가 됐을 때만 나머지가 0이 된다.
+
+                if(i == imageList.length){
+                     i = 0; 
+                } else if (i == -1) {
+                    i = imageList.length -1;
+                } 
+                fnImageDisplay();
+            }
+
+            /*
+                버튼 2개 각각 이벤트 만들어줄 경우
+
+                이전 버튼 click 이벤트
+                $('#btn-prev').click(function(event){ // 매개변수로 event 넣어야될지 말지 고민되면 걍 넣고 쓰지말든가 하세요,,
+                    fnImageSlide(-1);
+                })
+
+                다음 버튼 click 이벤트
+                $('#btn_next').click(function(event){
+                    fnImageSlide(1)
+                })
+             */
+
+           
+             /*
+                이동 버튼의 click 이벤트
+
+                $('.btn_move').click(function(event){ 
+                    if($(this).text() == '이전') { // 이전버튼을 눌렀다면 this가 이전버튼이 되는 것이고, 다음버튼을 눌렀다면 this가 다음버튼이 되는 것이다..
+                        fnImageSlide(-1);
+                    } else {
+                        fnImageSlide(1);
+                    }
+                });
+            */
+
+            // 이동 버튼의 click 이벤트(data- 속성 활용하기)
+            $('.btn_move').click(function(event){
+                fnImageSlide($(this).data('value')); 
+                /*
+                    이벤트 대상인 this(버튼 2개)의 data속성 중 value의 값에 따라 fnImageSlide 메소드의 인수에 들어가는 값이 1 or -1로 달라진다.
+                    한마디로 무슨 버튼을 누르냐에 따라 data속성의 value값이 결정되고 그게 fnImageSlide메소드에 전달되고
+                    fnImageSlide(1); or fnImageSlide(-1); 둘 중 하나가 실행된다.
+                */
+               
+            });
+            // 함수 호출
+            fnImageDisplay();
+
+        </script>
+</body>
+</html>

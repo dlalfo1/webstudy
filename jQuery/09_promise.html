@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../resources/js/lib/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+    
+    
+    <script>
+
+        // 비동기 처리의 문제점 확인하기 
+        // 요청을 한 다음 응답이 올 때까지 기다리지 않는다.
+        var a; // undefined 상태
+        $.ajax({
+            // 요청
+            type: 'GET',
+            url: 'product.txt',
+            async: true,
+            // 응답
+            dataType: 'text',
+            success: function(data){
+                
+                a = data; // a = 'Hello World'를 기대하지만, 응답이 올 때까지 기다리지 않고 다음 코드가 진행된다.
+            }
+        });
+         console.log(a); // a는 undefined이다. 요청보낸것에 대한 응답이 돌아올 때까지 기다리지 않기 때문이다.
+    </script>
+
+    <script>
+
+        /*
+            Promise
+            1. 비동기 처리를 할 때 응답이 올 때까지 기다리는 JavaScript 객체이다.
+            2. 비동기 처리가 완료된 이후에 응답의 성공(success)과 실패(error)를 모두 처리할 수 있다.
+            3. Promise 상태
+                1) pending   : 대기상태, 이행(fulfilled)하지도, 거부(reject)하지도 않은 초기 상태
+                2) fulfilled : 이행상태, 비동기 처리가 성공적으로 완료된 상태
+                3) rejected  : 거부상태, 비동기 처리가 실패한 상태
+            4. Promise.resolve()가 반환하는 프로미스 값은 then() 메소드를 따라가서 처리된다.
+            5. Promise.reject()가 반환하는 프로미스 값은 catch() 메소드를 따라가서 처리된다.
+            => Promise는 javascript객체이다.
+        */
+    </script>
+    <script>
+
+        // Promise 객체 생성하기
+        var promise = new Promise(function(resolve, reject){ // resolve : then() 메소드가 전달하는 함수가 저장
+                                                             // reject  : catch() 메소드가 전달되는 함수가 저장
+                                                             // resolve, reject는 콜백함수이다. 
+            resolve();
+            reject();
+        });
+
+        // Promise 객체의 then() 메소드 호출하기
+        promise.then(function(){      // then메소드의 인수로 함수를 전달하면 resolve(첫번째 매개변수)로 전달되고 resolve() 함수가 실행된다.
+                                      // then과 resolve는 함께 동작한다.
+            console.log('resolve() 호출');
+        });
+
+        // Promise 객체의 catch() 메소드 호출하기3
+        promise.catch(function(){
+            console.log('reject() 호출');
+        })
+
+    </script>
+
+    <script>
+
+        // $.ajax과 Promise 함께 사용하기
+
+        // Promise 객체 생성과 then()/catch() 메소드 호출
+        new Promise(function(resolve, reject){
+
+            $.ajax({
+                // 요청
+                type: 'GET',
+                url: 'product.txt',
+                async: true,
+                // 응답
+                dataType: 'text',
+                success: function(data){
+                    resolve(data);  // then() 메소드에서 정의한 함수에 연결, ajax 응답이 온 뒤 resolve()가 호출된다.
+                },
+                error: function(jqXHR){
+                    reject(jqXHR);  // catch() 메소드에서 정의한 함수에 연결
+                }
+            });
+
+                }).then(function(param){    // resolve(data); 호출로 인해서 매개변수 param에 data가 전달된다.
+                    console.log(param);
+                }).catch(function(param){   // reject(jqXHR); 호출로 인해서 매개변수 param에 jqXHR이 전달된다.
+                    console.log(param.status + '(' + param.statusText + ')');
+                });
+
+    </script>
+
+    <script>
+
+        // ajax 동작 완료 후 다른 ajax 동작으로 연결되는 경우
+
+        // 시나리오
+        // 1. 입력된 이메일이 회원 정보에 등재된 이메일이 아니면 새로 등록함을 허용한다. 
+        // 2. 이메일 인증을 통해서 인증 받은 이메일만 새로 등록함을 허용한다.
+        
+        function fnValidEmail(){
+            new Promise(function(resolve, reject){
+                $.ajax({
+                    // 사용자가 입력한 이메일이 DB에 있는지 점검을 요청
+                    success: function(data){
+                        if(data){ // 사용 가능한 이메일이라면
+                            resolve(); // 사용 가능한 이메일이다.
+                        } else {
+                            reject(); // 사용 가능한 이메일이 아니다.
+                        }
+                    }
+                });
+            }).then(function(){
+                $.ajax({
+                    // 사용자가 입력한 이메일로 인증코드를 보내달라는 요청 
+                    success: function(data){
+                        if(data){
+                            // 인증코드 보내기 성공
+
+                        } else {
+                            // 인증코드 보내기 실패
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+
+    <script>
+
+        // Promise 객체가 필요한 또 다른 경우 : 타이머 함수
+
+        var a; // a = undefined
+        setTimeout(function(){
+            a = 10; 
+        }, 3000); // 3초 후에 a = 10;이 처리된다.
+        console.log(a);
+
+
+    </script>
+
+    <script>
+
+        // Promise로 타이머 함수 동작 해결하기
+
+        var a;  // a = undefined
+        new Promise(function(resolve, reject){
+            setTimeout(function(){
+                resolve();
+            }, 3000); // 3초 후에 resolve()가 호출된다는 약속
+        }).then(function(){ // 3초후에 여기있는 function이 작동한다.
+            a = 10;
+            console.log(a);
+        })
+    </script>
+
+    <script>
+
+        // 소개. Promise대신 콜백으로 처리하기
+        // 소개만 할뿐.. 보통 Promise 사용한다. 콜백 계속 사용하다보면 콜백지옥에 빠짐,, 
+        function fnFunc(callback){
+            $.ajax({
+                // 요청
+                type: 'GET',
+                url: 'product.txt',
+                async: true,
+                // 응답
+                dataType: 'text',
+                success: function(data){
+                    callback(data); // 응답 결과를 다른 함수로 넘겨서 처리
+                }
+            });
+        }
+
+        fnFunc(function(data){ // 매개변수 callback으로 전달되는 익명 함수
+            alert(data);
+        })
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../resources/js/lib/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <!--
+        asynchronous
+        javascript
+        and
+        xml
+    -->
+    <div id="box1">
+        <button id="btn1">텍스트 응답 처리</button>
+    </div>     
+    <script>
+        $('#btn1').on('click', function(){ // this(이벤트 대상) : $('#btn1'), 화살표함수를 사용하면 this를 사용할 수 없어 일반 익명함수 사용함.
+            $.ajax({ // 객체를 넣어준다 { }, 그 안에 프로퍼티와 밸류를 넣어준다. 여기서 프로퍼티는 '문자열'로 표시하지 않을 것임.(따옴표 제외)
+                //요청(open)
+                type: 'get',        // HTTP Method(GET, POST), 요청하는 방식
+                url: 'product.txt', // URL (서버 경로), 요청을 보내는 서버의 주소
+                async: true,         // 비동기(ture, 생략 가능), 동기(false)
+
+                // 응답
+                dataType: 'text', // 응답 데이터의 타입(text, xml, json 등), 서버가 보내주는 데이터가 뭐라고 생각하느냐
+                success: function(data){  // 응답이 성공했을 때 할 일, 매개변수 data로 응답 데이터가 자동전달된다.(responseText, responseXML, JSON.parse())
+                       $('#btn1').after($('<div>').text(data)); // <div> 태그를 제이쿼리 객체로 감싸면 닫는 코드는 신경쓰지 않아도 된다. 자동생성됨.
+                    // $('#box1').append($('<div>').text(data));
+                    // after() 메소드는 선택한 요소의 바로 뒤에 새로운 HTML 요소나 컨텐츠를 추한다.
+                },
+                error: function(jqXHR){ // 응답에 실패했을시 매개변수 jqXHR로 에러 정보가 자동 전달된다.
+                    $('#box1').append($('<div>').text(jqXHR.status));     // 응답 코드 (404)
+                    $('#box1').append($('<div>').text(jqXHR.statusText)); // 응답 코드 텍스트 (Not Found)
+                    $('#box1').after(jqXHR.responseText);                 // 응답 텍스트
+
+                }
+            })
+        });
+    </script>
+
+    <div id="box2">
+        <button id="btn2">XML 요청1</button>
+    </div>
+
+    <script>
+        $('#btn2').on('click', function(){
+            $.ajax({
+                type: 'get',
+                url: 'product1.xml',
+                async: true,
+                dataType: 'xml',
+                success: function(data){ // var data = xhr.responseXML; , 받아온 데이터가 매개변수 data에 저장된다.
+                    var productList = $(data).find('product');
+                    $.each(productList, (i, product)=>{ // productList 배열을 순회할건데 인덱스는 i, 각각의 요소는 product이다.
+                                                        // 여기서 product는 일반객체이므로 제이쿼리 객체로 바꿔줘야 find()메소드를 사용가능하다.
+                                                        // productList가 일반객체이든 제이쿼리객체이든 얘를 each문으로 돌려서 얻은 요소인 product는 일반객체 이므로 제이쿼리객체로 바꿔줘야함..
+                        var ul = $('<ul>');
+                        ul.append($('<li>').text($(product).find('model').text())); 
+                            // find메소드를 사용하여 반환되는건 이미 제이쿼리 객체이기 때문에 <model> 태그가 text()메소드를 사용할 수 있다.
+                        ul.append($('<li>').text($(product).find('maker').text()));
+                        ul.append($('<li>').text($(product).find('price').text()));
+                        $('#box2').append(ul);
+                    })
+                    
+                },
+                error: function(jqXHR){
+                    $('#box2').append($('<div>').text(jqXHR.status));
+                    $('#box2').append($('<div>').text(jqXHR.statusText));
+                    
+                }
+            })
+        });
+    </script>
+
+    <div id="box3">
+        <button id="btn3">XML 요청2</button>
+    </div>
+
+    <script>
+        $('#btn3').on('click', function(){ // id가 btn3 버튼을 클릭했을시 펑션이 동작할것이다~
+            $.ajax({ // 비동기방식으로 처리할거야
+                type: 'get', // 요청방식은 get방식
+                url: 'product2.xml', // 요청보낼 주소는 얘고
+                async: true, // 비동기방식 true
+                dataType: 'xml', // 받아올 데이터는 xml데이터고
+                success: function(data){ // 성공했을 때 실행할 펑션인데 성공했을때 받아온 데이터가 data에 저장될거야
+                        $.each($(data).find('product'), (i, product)=>{ // 그걸 each문으로 순회할거야. 거기서 인덱스는 i고 순회한 각각의 요소는 product에 담아줄게
+                            var ul = $('<ul>'); // 목록으로 만들거니까 <ul>태가 하나 만들어주고~
+                            ul.append($('<li>').text($(product).attr('model')));
+                            ul.append($('<li>').text($(product).attr('maker')));
+                            ul.append($('<li>').text($(product).attr('price')));
+                            $('#box3').append(ul);
+                            });
+                },
+                error: function(jqXHR){
+                    $('#box3').append($('<div>').text(jqXHR.status));
+                    $('#box3').append($('<div>').text(jqXHR.statusText));
+                    $('#box3').append($('<div>').text(jqXHR.responseText));
+                    
+                }
+            })
+             
+        })
+    </script> 
+
+    <box id="box4">
+        <button id="btn4">JSON 요청</button>
+    </box>
+    <script>
+        $('#btn4').on('click', function(){
+            $.ajax({
+                type: 'get',
+                url: 'product.json',
+                async: true,
+                dataType: 'json',
+                success: function(data){  // var data = JSON.parse(xhr.responseText);
+                                       // 여기서 받아온 data에 저장된 데이터는 배열이다. (JSON.parse를 진행할 필요가 없다. text인 경우에만 하는것임~)
+                    $.each(data, (i, product)=>{
+                        var ul = $('<ul>');
+                     // ul.append($('<li>').text($(product).prop('maker'))); => 이렇게 product를 제이쿼리 객체로 만들어줄필요 없다. 그냥 일반객체의 프로퍼티 값을 빼오는형식으로 코드를 짜면 되기때문이다. 
+                        ul.append($('<li>').text(product.price));
+                        ul.append($('<li>').text(product.maker));
+                        ul.append($('<li>').text(product.model));
+                        $('#box4').append(ul);
+                    });
+
+                },
+                error: function(jqXHR){
+                    $('#box3').append($('<div>').text(jqXHR.status));
+                    $('#box3').append($('<div>').text(jqXHR.statusText));
+                    $('#box3').append($('<div>').text(jqXHR.responseText));
+                }
+            });
+        });
+    </script>
+
+    <div id="box5">
+        <button id="btn5">book.xml 조회하기</button>
+    </div>
+    <div id="box5">
+        <table border="1" id="tr">
+            <thead>
+                <tr>
+                    <td>제목(title)</td>
+                    <td>썸네일(image+link)</td>
+                    <td>저자(author)</td>
+                    <td>할인가(discount)</td>
+                    <td>출판사(publisher)</td>
+                    <td>출판일(pubdate)</td>
+                    <td>ISBN(isbn)</td>
+                    <td>개요(description)</td>
+                </tr>
+            </thead>
+            <tbody id="book_list">
+
+            </tbody>
+
+        </table>
+    </div>
+    <script>
+        $('#btn5').on('click', function(){
+            $.ajax({
+                type: 'get',
+                url: 'book.xml',
+                async: true,
+                dataType: 'xml',
+                success: function(data){
+                console.log(data);
+                    $.each($(data).find('item'), function(i, item){
+                        var tr = $('<tr>');
+                        tr.append($('<td>')).text($(item).find('title').text());
+                        tr.append($('<td>')).text($(item).find('title').text());
+                        tr.append($('<td>')).text($(item).find('title').text());
+                        tr.append($('<td>')).text($(item).find('title').text());
+                        tr.append($('<td>')).text($(item).find('title').text());
+                        tr.append($('<td>')).text($(item).find('title').text());
+                        tr.append($('<td>')).text($(item).find('title').text());
+                        tr.append($('<td>')).text($(item).find('title').text());
+                      //  tr.append($('<td>')).html($('<a>').attr('target', '_blank').attr('href',$(item).find('link').text()));
+                       // tr.append($('<td>')).text($(item).find('author').text())
+                     //   tr.append($('<td>')).text($(item).find('discount').text())
+                     //   tr.append($('<td>')).text($(item).find('publisher').text())
+                     //   tr.append($('<td>')).text($(item).find('pubdate').text())
+                     //   tr.append($('<td>')).text($(item).find('isbn').text())
+                     //   tr.append($('<td>')).text($(item).find('description').text())
+                        $('#book_list').append(tr);
+
+                    });
+                    
+
+                },
+                error: function(jqXHR){
+                    $('#box3').append($('<div>').text(jqXHR.status));
+                    $('#box3').append($('<div>').text(jqXHR.statusText));
+                    $('#box3').append($('<div>').text(jqXHR.responseText));
+                }
+
+           });
+
+        });
+    </script>
+</body>
+</html>
