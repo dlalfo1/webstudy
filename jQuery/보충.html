@@ -141,5 +141,126 @@
             fnImageDisplay();
 
         </script>
+
+        <hr>
+
+        <div id="box3">
+            <div id="origin_image"></div>
+            <ul id="thumbnails"></ul>
+        </div>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+}
+            #box3 {
+                width: 480px;
+
+            }
+            #origin_image {
+                width: 100%; /* 부모인 box3과 같다.*/
+                height: 320px;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+            }
+            #thumbnails {
+                width: 100%;
+                height: 60px;
+                margin-top: 20px;
+                display: flex;
+                justify-content: center; /* 자식들을 배치하는 방법 */
+                list-style-type: none;
+            }
+
+            #thumbnails li {
+                width: 60px;
+                height: 100%;
+                margin: 0 10px; /* 상하: 0, 좌우: 10 */
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                }
+
+        </style>
+        <script>
+
+            // dom
+            var originImage = $('#origin_image');
+              var thumbnails = $('#thumbnails');
+
+            // 이미지 목록(배열)과 인덱스 
+            var idx = 0;
+            var thumbnailList = ['flower1.jpg', 'flower2.jpg', 'flower3.jpg', 'flower4.jpg', 'flower5.jpg'];
+
+            // 초기 이미지 
+            originImage.css('background-image', 'url(../../images/' + thumbnailList[idx] + ')');
+
+            // 썸네일 이미지 넣기
+            $.each(thumbnailList, (i, element)=>{
+                var li = $('<li>');
+                li.css('background-image', 'url(../../images/' + element + ')');
+                thumbnails.append(li);
+            });
+
+            // 썸네일 이미지에 마우스를 가져다대면 원본 이미지가 변경되는 이벤트
+            $('#thumbnails li').on('mouseover', function(){ // 썸네일에 마우스를 올려놓으면
+                $(this).css('border', '3px solid orange'); // 선택한 이미지의 테두리도 바꿔준다.
+                originImage.css('background-image', $(this).css('background-image')); // 현재 선택된 썸네일의 백그라운드 이미지를 가져와서 원본이미지로 바꿔주겠다.
+
+            });
+            $('#thumbnails li').on('mouseout', function(){
+            $(this).css('border', '0');
+             })
+        </script>
+
+        <hr>
+
+        <div id="box4"></div>
+
+        <style>
+            #box4 {
+                width: 480px;
+                height: 320px;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                transition: background-image 3s linear;  /* 이미지가 바뀔 때 이행되는게 보여진다.*/
+            }
+        </style>
+        <script>
+        var screenList = ['animal2.jpg', 'architecture2.jpg', 'flower2.jpg', 'fruit2.jpg', 'nature2.jpg'];
+        var box4 = $('#box4');
+        var no = parseInt(Math.random() * screenList.length);
+
+            // 첫 이미지
+            box4.css('background-image', 'url(../../images/' + screenList[no] + ')'); /* 배열에서 무작위로 인덱스번호 넣어줄거임*/
+        
+            // 10초마다 바뀌는 이미지
+            // 하지만 무작위로 이미지가 바뀌기때문에 전 이미지랑 바뀌면 이미지가 계속 바뀌지 않는 일이 발생함.
+            setInterval(function(){
+            while(no == parseInt(Math.random() * screenList.length)){  // 이전에 생성된 no와 동일한 no가 다시 생성되면
+                no = parseInt(Math.random() * screenList.length);      // no를 다시 만든다.
+            }
+            box4.css('background-image', 'url(../../images/' + screenList[no] + ')');
+             }, 10000);
+
+        </script>
+
+        <hr>
+
+        <div>
+            <input type="button" value="선택" id="btn_choice">
+            <h1>숫자 : <span id="numbers"></span></h1>
+            <h1>당첨 : <span id="pick"></span></h1>
+        </div>
+
+        <script>
+            var balls = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+            $('#numbers').text(balls);
+            $('#btn_choice').on('click', function(){
+                var randNo = parseInt(Math.random() * balls.length); // 배열 balls의 임의의 인덱스 randNo 생성
+                $('#pick').append(balls.splice(randNo, 1) + '&nbsp;'); // splice(randNo, 1) : 인덱스 randNo부터 1개를 반환한 뒤 제거한다.
+                $('#numbers').text(balls);
+            });
+        </script>
 </body>
 </html>
