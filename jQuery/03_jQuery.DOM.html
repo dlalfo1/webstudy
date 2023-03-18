@@ -32,12 +32,12 @@
         $(function(){
 
             // 4. 자식, 후손 호출 방법
-            console.log($('#ott > li'));                  // id가 ott인 태그(<ul> 태그)의 자식인 <li>태그
+            console.log($('#ott > li'));                  // id가 ott인 태그(<ul> 태그)의 자식인 <li>태그 전부
             console.log($('#ott').find('li'));            // find() : 후손, 자식 모두 가져오는 메소드(자식 중 <li>태그)
             console.log($('#ott a'));                     // ott의 후손 중 <a>태그 
             console.log($('#ott').find('a'));             // 후손 <a>태그 
-            console.log($('#ott').children());            // children(): 자식들 가져오는 메소드(모든 자식)
-            console.log($('#ott').children().children()); // 모든 자식의 모든 자식을 가져오는 태그
+            console.log($('#ott').children());            // children(): 자식들 가져오는 메소드(모든 자식 = 모든 <li> 태그)
+            console.log($('#ott').children().children()); // 모든 자식의 모든 자식(모든 <a>태그)    을 가져오는 태그
 
 
             /*
@@ -67,11 +67,21 @@
     <div>
         <div class="inner_wrap">
             <ul id="ott">
-                <li id="netflex"><a href="javascript:void(0)">넷플릭스</a></li>
-                <li id="disneyplus"><a href="javascript:void(0)">디즈니플러스</a></li>
-                <li id="wave"><a href="javascript:void(0)">웨이브</a></li>
-                <li id="coupangplay"><a href="javascript:void(0)">쿠팡플레이</a></li>
-                <li id="watchar"><a href="javascript:void(0)">왓챠</a></li>
+                <li id="netflex">
+                    <a href="javascript:void(0)">넷플릭스</a>
+                </li>
+                <li id="disneyplus">
+                    <a href="javascript:void(0)">디즈니플러스</a>
+                </li>
+                <li id="wave">
+                    <a href="javascript:void(0)">웨이브</a>
+                </li>
+                <li id="coupangplay">
+                    <a href="javascript:void(0)">쿠팡플레이</a>
+                </li>
+                <li id="watchar">
+                    <a href="javascript:void(0)">왓챠</a>
+                </li>
             </ul>
         </div>
     </div>  
@@ -112,8 +122,12 @@
     </script>
     <div class="container">
         <form id="frm">
-            <div><input type="text"></div>
-            <div><input type="password"></div>
+            <div>
+                <input type="text">
+            </div>
+            <div>
+                <input type="password">
+            </div>
             <div>
                 <input type="radio" name="gender" value="male">남
                 <input type="radio" name="gender" value="female">여

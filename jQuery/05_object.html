@@ -14,11 +14,12 @@
         $(function(){
             // 객체 생성
             var obj = {
-                'title': '홍길동전',
-                'author': '허균',
-                'price': 100000
+                'title': '홍길동전', // 프로퍼티 : title, 값 : 홍길동전
+                'author': '허균',   // 프로퍼티 : author, 값 : 허균
+                'price': 100000     // 프로퍼티 : price, 값 : 100000
             };
             // 프로퍼티 추가하기
+          //  $.extend() 메소드는 두 개 이상의 객체를 병합하여 하나의 객체로 만드는 역할을 수행합니다. 첫 번째 인자로 전달된 객체(obj 객체)에 두 번째 인자로 전달된 객체(publisher와 pubDate 프로퍼티를 가진 객체)의 프로퍼티를 추가합니다.
             $.extend( // jQuery.extend와 같다. static(객체로 부르지 않고 class로 부른다.)메소드
                 obj,
                 {
