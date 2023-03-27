@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button id="btn">전송</button>
+    <script>
+        // 고전 이벤트
+        document.getElementById('btn').onclick = function(){
+            alert('전송합니다.');
+        }
+        
+        // 표준이벤트
+        document.getElementById('btn').addEventListener('click', function(){
+            alert('전송합니다.');
+        })
+    </script>
+        
+    <button id="btn" onclick="fnAlert()">전송</button>
+    <script>
+        function fnAlert(){
+            alert('전송합니다.');
+        }
+    </script>
+
+    <button id="to_site">이동</button>
+    <script>
+        document.getElementById('to_site').addEventListener('click', function(){ // 고전이벤트, 표전이벤트 내맘대로 고르기
+            location.href='https://www.google.com';
+            또는
+            open('https://www.google.com');
+        })
+    </script>
+</script>
+</body>
+</html>
